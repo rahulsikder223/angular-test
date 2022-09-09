@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { DataService } from './utility/data-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-test-project';
+  dataSubscription: Subscription;
+
+  constructor(private dataService: DataService) {
+    this.dataSubscription = this.dataService.get("https://api.publicapis.org/entries", null).subscribe(response => {
+      console.log(response);
+    });
+  }
 }
